@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>利用jsˊ實現提示文本框可输入的剩餘字數</title>
+</head>
+ 
+<body>
+    <div>
+        <input type="text" id="input" maxlength="8">
+        <span id='ipt_span'></span>
+        <span id='ipt_text'></span>
+    </div>
+    <div>
+        中文：<span id="chiLen">0</span></br>
+        英文：<span id="engLen">0</span></br>
+        總共：<span id="totalLen">0</span></br>
+        還可以輸入<span style="font-family: Georgia; font-size: 26px;" id="wordCheck">0</span>個字
+    </div>
+    <div>
+        接受的有效內容：<span style="font-family: Georgia; font-size: 26px;" id="wordAccept"></span>
+    </div>
+ 
+    <script src="./app.js"></script>
+</body>
+ 
+</html>
