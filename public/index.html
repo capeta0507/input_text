@@ -4,26 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>利用jsˊ實現提示文本框可输入的剩餘字數</title>
+    <title>marvel</title>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
 </head>
+<style>
+    .iron_Block{
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0px;
+    }
+    .iron{
+        width: 47%;
+        border: 1px solid black;
+        margin-top: 30px;
+    }
+    .ironData{
+        width: 100%;
+        display: flex;
+        border-bottom: 1px solid black;
+    }
+    .ironLeft,.ironRight{
+        width: 50%;
+        padding: 10px;
+    }
+    .iron_tag{
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        margin-top: 15px;
+        font-size: 20px;
+        color: black;
+    }
+    .ironRight > img{
+        width: 100%;
+    }
+    .ironRemarks{
+        width: 95%;
+        margin: 0 auto;
+        padding: 10px 0;
+    }
+    .remake{
+        color: red;
+        font-size: 14px;
+    }
+</style>
  
 <body>
-    <div>
-        <input type="text" id="input" maxlength="8">
-        <span id='ipt_span'></span>
-        <span id='ipt_text'></span>
+    <div id="marvel" class="iron_Block">
+        <!-- <div class="iron">
+            <div class="ironData">
+                <div class="ironLeft">
+                    <div class="iron_tag">片名：<span id="">鋼鐵人</span></div>
+                    <div class="iron_tag">英文片名：<span id="">Iron Man</span></div>
+                    <div class="iron_tag">主演：<span id="">小勞勃·道尼</span></div>
+                    <div class="iron_tag">上映日期：<span id="">2008.4.30</span></div>
+                </div>
+                <div class="ironRight">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/ninja-firestore-c9996.appspot.com/o/iron_man01.jpg?alt=media&token=ac337f9f-c5f4-42fe-bbcf-178d4adb9fde" alt="">
+                </div>
+            </div>
+            <div class="ironRemarks">
+                天才發明家兼企業家東尼·史塔克擁有已故父親霍華的史塔克工業；表面是愛國者的他，私底下卻是極度自戀自負的花花公子，藉著販售軍火的收入來逍遙自在。他與摯友兼空軍上校詹姆士·羅德在阿富汗[註釋 3]完成最新科技導彈「耶利哥」（Jericho）的測試，
+                前往機場回國途中遭到一群武裝民兵襲擊。護衛隊全體陣亡後，東尼被一顆出產於自己公司的火箭推進榴彈炸傷，導彈碎片直接插進他的胸腔。許久後，東尼在一個洞穴中清醒，發現自己的胸部中央安裝一個連接汽車蓄電池的電磁鐵，幫他動手術的男子伊申解釋他身體裡的彈片插在深處而無法移除，只能靠這枚電磁鐵來避免他的心臟受損害。
+                <br>
+                <br>
+                <div class="remake">*資料來源 維基百科『漫威電影宇宙』</div>
+            </div>
+        </div> -->
     </div>
-    <div>
-        中文：<span id="chiLen">0</span></br>
-        英文：<span id="engLen">0</span></br>
-        總共：<span id="totalLen">0</span></br>
-        還可以輸入<span style="font-family: Georgia; font-size: 26px;" id="wordCheck">0</span>個字
-    </div>
-    <div>
-        接受的有效內容：<span style="font-family: Georgia; font-size: 26px;" id="wordAccept"></span>
-    </div>
+    <script>
+        // Your web app's Firebase configuration
+        var config = {
+            apiKey: "AIzaSyDKnrPncPdRDiDvCqrdxfWqVBxfqyWerLw",
+            authDomain: "ninja-firestore-c9996.firebaseapp.com",
+            databaseURL: "https://ninja-firestore-c9996.firebaseio.com",
+            projectId: "ninja-firestore-c9996",
+            storageBucket: "ninja-firestore-c9996.appspot.com",
+            messagingSenderId: "75336445678",
+            appId: "1:75336445678:web:11e57d14bad4373ce3cdff"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(config);
+        // make auth and firebase references
+        var db = firebase.firestore();
+        db.settings({ timestampsInSnapshots: true })
+  
+    </script>
+    <script>
+        // var ironCard = document.getElementsByClassName('iron');
+        var card = ''
+        var marvel = document.getElementById('marvel');
+        function renderMarvel(data){
+            // console.log(data, 'data')
+            card += `<div class="iron">`;
+            card += `<div class="ironData">`;
+            card += `<div class="ironLeft">`;
+            card += `<div class="iron_tag">片名：${data.title}</div>`;
+            card += `<div class="iron_tag">英文片名：${data.en_title}</div>`;
+            card += `<div class="iron_tag">主演：${data.actor}</div>`;
+            card += `<div class="iron_tag">上映日期：${data.date}</div>`;
+            card += `</div>`;
+            card += `<div class="ironRight">`;
+            card += `<img src="${data.image}" alt="">`;
+            card += `</div>`;
+            card += `</div>`;
+            card += `<div class="ironRemarks">${data.story}<br><br>`;
+            card += `<div class="remake">*資料來源 維基百科『漫威電影宇宙』</div>`;
+            card += `</div>`;
+            card += `</div>`;
+        }
+        db.collection('marvel_movie').get().then(snapshot => {
+            // console.log(snapshot.docs[0])
+            // console.log(snapshot.docs[0].id)
+            // console.log(snapshot.docs[0].data().title)
+            card = ''
+            for(let x = 0; x<snapshot.docs.length; x++){
+                // console.log(snapshot.docs[x].data())
+                renderMarvel(snapshot.docs[x].data())
+            }
+            // snapshot.docs.map(doc => {
+            //     let data = doc.data()
+            //     renderMarvel(data)
+            // });
+            // console.log(card, 'card')
+            marvel.innerHTML = card
+        });
+    </script>
  
-    <script src="./app.js"></script>
+    <!-- <script src="./app.js"></script> -->
 </body>
  
 </html>
